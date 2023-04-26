@@ -38,3 +38,5 @@ app.delete("/", async function (req, res) {
 app.listen(3003, function () {
   console.log("Server started on the port 3003");
 });
+
+export default app;
