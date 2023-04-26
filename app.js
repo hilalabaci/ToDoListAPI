@@ -1,10 +1,16 @@
 //jshint esversion:6
+import dotenv from "dotenv";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import cors from "cors";
 import express from "express";
 import Item from "./models/item.js";
-mongoose.connect("mongodb://127.0.0.1:27017/itemDB");
+
+dotenv.config();
+
+mongoose.connect(
+  `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@${process.env.MONGODB_URL}/itemDB`
+);
 const app = express();
 app.use(cors());
 const jsonParser = bodyParser.json();
@@ -24,7 +30,7 @@ app.post("/", jsonParser, async function (req, res) {
 });
 app.delete("/", async function (req, res) {
   const id = req.query.id;
-  console.log(id)
+  console.log(id);
   await Item.deleteOne({ _id: id });
   res.sendStatus(200);
 });
